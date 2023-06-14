@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-class DetailSuratPage extends StatelessWidget {
-  const DetailSuratPage({super.key});
+class DetailSuratMasukPage extends StatelessWidget {
+  const DetailSuratMasukPage({super.key});
 
   @override
   Widget build(BuildContext context) {

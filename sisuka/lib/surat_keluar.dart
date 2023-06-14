@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:sisuka/detail_surat_masuk.dart';
+import 'package:sisuka/detail_surat_keluar.dart';
 
-class SuratMasukPage extends StatelessWidget {
-  const SuratMasukPage({super.key});
+class SuratKeluarPage extends StatelessWidget {
+  const SuratKeluarPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
      appBar: AppBar(
       
-        title: Text('Surat Masuk'   , 
+        title: Text('Surat Keluar'   , 
         style: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.bold,
@@ -34,7 +34,7 @@ class SuratMasukPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Daftar Surat Masuk" , style: TextStyle(
+              Text("Daftar Surat Keluar" , style: TextStyle(
                 fontSize: 14 , fontWeight: FontWeight.bold,
 
               ),),
@@ -43,8 +43,8 @@ class SuratMasukPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                 return ListTile(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => DetailSuratMasukPage(),));
-                  },
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => DetailSuratKeluarPage(),));
+                  },  
                   leading: CircleAvatar(
                     backgroundColor: const Color.fromARGB(255, 255, 192, 3),
                   ),
