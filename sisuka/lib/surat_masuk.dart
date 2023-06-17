@@ -58,6 +58,4 @@ class SuratMasukPage extends StatelessWidget {
       ),
     );
   }
-
-
 }
