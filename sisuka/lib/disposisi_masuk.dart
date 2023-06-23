@@ -7,54 +7,48 @@ class DisposisiMasukPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar: AppBar(
-        title: Text('Disposisi Masuk'   , 
-        
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          color: Colors.black
+        appBar: AppBar(
+          title: const Text(
+            'Disposisi Masuk',
+            style: TextStyle(
+                fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
+          ),
+          leading: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: const Icon(
+                MdiIcons.chevronLeft,
+              )),
+          iconTheme: const IconThemeData(
+            color: Colors.black,
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.white,
         ),
-        ),
-        leading: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(MdiIcons.chevronLeft ,)),
-        iconTheme: IconThemeData(color: Colors.black , ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        
-      ),
-      body: new Container(
-        padding: new EdgeInsets.all(10.0),
-        child: new Column(
-          children: <Widget> [
-            new TextField(
-              decoration: new InputDecoration(
-                hintText: "Ditujukan Pada",
-                labelText: "Ditujukan Pada",
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(20.0)
-                )
+        body: Container(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: <Widget>[
+                TextField(
+                  decoration: InputDecoration(
+                      hintText: "Ditujukan Pada",
+                      labelText: "Ditujukan Pada",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0))),
                 ),
-              ),
-
-              new Padding(padding: EdgeInsets.only(top: 20.0),),
-              new TextField(
-              maxLines: 5,
-              decoration: new InputDecoration(
-                hintText: "Isi Disposisi",
-                labelText: "Isi Disposisi",
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(20.0)
-                )
+                const Padding(
+                  padding: EdgeInsets.only(top: 20.0),
                 ),
-              ),
-
-            ],
-           )
-        )
-    );
+                TextField(
+                  maxLines: 5,
+                  decoration: InputDecoration(
+                      hintText: "Isi Disposisi",
+                      labelText: "Isi Disposisi",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0))),
+                ),
+              ],
+            )));
   }
 }

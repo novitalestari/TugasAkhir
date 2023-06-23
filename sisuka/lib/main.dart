@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:sp_util/sp_util.dart';
 import 'login_screen.dart';
 import 'dashboard_screen.dart';
 import 'disposisi_masuk.dart';
 import 'disposisi_keluar.dart';
 
-void main() { 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SpUtil.getInstance();
   runApp(LoginApp());
 }
 
@@ -12,17 +15,18 @@ class LoginApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner:false,
-      title: 'SISUKA',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: LoginScreen(),
-      routes: {
-        '/login': (context) => LoginScreen(),
-        '/dashboard': (context) => DashboardScreen(),
-      }
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'SISUKA',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: (SpUtil.getBool('isLoggedIn') != true)
+            ? LoginScreen()
+            : DashboardScreen(),
+        routes: {
+          '/login': (context) => LoginScreen(),
+          '/dashboard': (context) => DashboardScreen(),
+        });
   }
 }
 

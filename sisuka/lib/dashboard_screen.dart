@@ -1,32 +1,32 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:sisuka/login_screen.dart';
 import 'package:sisuka/profile_page.dart';
 import 'package:sisuka/surat_masuk.dart';
 import 'package:sisuka/surat_keluar.dart';
-import 'package:sisuka/disposisi_masuk.dart';
-import 'package:sisuka/disposisi_keluar.dart';
-
+import 'package:sp_util/sp_util.dart';
+import 'package:http/http.dart' as http;
 
 class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dashboard'   ,
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          color: Colors.black
-        ),
+        title: const Text(
+          'Dashboard',
+          style: TextStyle(
+              fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
       ),
       body: GridView.count(
         crossAxisCount: 2,
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         shrinkWrap: true,
         children: [
           buildMenuItem(
@@ -34,9 +34,11 @@ class DashboardScreen extends StatelessWidget {
             title: 'Surat Masuk',
             onTap: () {
               // Aksi ketika menu "Surat Masuk" di-tap
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return SuratMasukPage();
-              },));
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return const SuratMasukPage();
+                },
+              ));
             },
           ),
           buildMenuItem(
@@ -44,19 +46,23 @@ class DashboardScreen extends StatelessWidget {
             title: 'Surat Keluar',
             onTap: () {
               // Aksi ketika menu "Surat Keluar" di-tap
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return SuratKeluarPage();
-              },));
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return const SuratKeluarPage();
+                },
+              ));
             },
           ),
           buildMenuItem(
-            icon:MdiIcons.account,
+            icon: MdiIcons.account,
             title: 'Profile',
             onTap: () {
               // Aksi ketika menu "Profile" di-tap
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return ProfilePage();
-              },));
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return const ProfilePage();
+                },
+              ));
             },
           ),
           buildMenuItem(
@@ -64,9 +70,15 @@ class DashboardScreen extends StatelessWidget {
             title: 'Logout',
             onTap: () {
               // Aksi ketika menu "Logout" di-tap
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                return LoginApp();
-              },));
+              _logout().then((value) {
+                if (value!) {
+                  Navigator.pushReplacement(context, MaterialPageRoute(
+                    builder: (context) {
+                      return LoginApp();
+                    },
+                  ));
+                }
+              });
             },
           ),
         ],
@@ -74,7 +86,29 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget buildMenuItem({required IconData icon, required String title, required VoidCallback onTap}) {
+  Future<bool?> _logout() async {
+    final url = Uri.parse('http://192.168.43.4:8000/api/auth/logout166');
+
+    try {
+      final response = await http.post(url, body: {}, headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!
+      });
+
+      if (response.statusCode == 200) {
+        SpUtil.clear();
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print('Log in failed. Status code: ${e}');
+    }
+  }
+
+  Widget buildMenuItem(
+      {required IconData icon,
+      required String title,
+      required VoidCallback onTap}) {
     return GestureDetector(
       onTap: onTap,
       child: Card(
@@ -83,9 +117,13 @@ class DashboardScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon),
-            SizedBox(height: 10),
-            Text(title ,
-              style: TextStyle(fontSize: 14 , fontWeight: FontWeight.bold   , ),
+            const SizedBox(height: 10),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
         ),

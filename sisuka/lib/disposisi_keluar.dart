@@ -8,7 +8,7 @@ class DisposisiKeluarPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
      appBar: AppBar(
-        title: Text('Disposisi Keluar'   , 
+        title: const Text('Disposisi Keluar'   , 
         
         style: TextStyle(
           fontSize: 14,
@@ -20,34 +20,34 @@ class DisposisiKeluarPage extends StatelessWidget {
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(MdiIcons.chevronLeft ,)),
-        iconTheme: IconThemeData(color: Colors.black , ),
+          child: const Icon(MdiIcons.chevronLeft ,)),
+        iconTheme: const IconThemeData(color: Colors.black , ),
         centerTitle: true,
         backgroundColor: Colors.white,
         
       ),
-      body: new Container(
-        padding: new EdgeInsets.all(10.0),
-        child: new Column(
+      body: Container(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
           children: <Widget> [
-            new TextField(
-              decoration: new InputDecoration(
+            TextField(
+              decoration: InputDecoration(
                 hintText: "Ditujukan Pada",
                 labelText: "Ditujukan Pada",
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(20.0)
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0)
                 )
                 ),
               ),
 
-              new Padding(padding: EdgeInsets.only(top: 20.0),),
-              new TextField(
+              const Padding(padding: EdgeInsets.only(top: 20.0),),
+              TextField(
               maxLines: 5,
-              decoration: new InputDecoration(
+              decoration: InputDecoration(
                 hintText: "Isi Disposisi",
                 labelText: "Isi Disposisi",
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(20.0)
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0)
                 )
                 ),
               ),

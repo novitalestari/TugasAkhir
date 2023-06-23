@@ -8,7 +8,7 @@ class DetailSuratKeluarPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
      appBar: AppBar(
-        title: Text('Detail Surat Keluar'   , 
+        title: const Text('Detail Surat Keluar'   , 
         
         style: TextStyle(
           fontSize: 14,
@@ -20,89 +20,89 @@ class DetailSuratKeluarPage extends StatelessWidget {
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(MdiIcons.chevronLeft ,)),
-        iconTheme: IconThemeData(color: Colors.black , ),
+          child: const Icon(MdiIcons.chevronLeft ,)),
+        iconTheme: const IconThemeData(color: Colors.black , ),
         centerTitle: true,
         backgroundColor: Colors.white,
         
       ),
       
-      body: new Container(
-        padding: new EdgeInsets.all(10.0),
-        child: new Column(
+      body: Container(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
           children: <Widget> [
-            new TextField(
-              decoration: new InputDecoration(
+            TextField(
+              decoration: InputDecoration(
                 hintText: "Asal Surat",
                 labelText: "Asal Surat",
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(20.0)
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0)
                 )
                 ),
               ),
 
-              new Padding(padding: EdgeInsets.only(top: 20.0),),
-              new TextField(
-              decoration: new InputDecoration(
+              const Padding(padding: EdgeInsets.only(top: 20.0),),
+              TextField(
+              decoration: InputDecoration(
                 hintText: "Dari",
                 labelText: "Dari",
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(20.0)
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0)
                 )
                 ),
               ),
 
-              new Padding(padding: EdgeInsets.only(top: 20.0),),
-              new TextField(
-              decoration: new InputDecoration(
+              const Padding(padding: EdgeInsets.only(top: 20.0),),
+              TextField(
+              decoration: InputDecoration(
                 hintText: "No. Surat",
                 labelText: "No. Surat",
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(20.0)
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0)
                 )
                 ),
               ),
 
-              new Padding(padding: EdgeInsets.only(top: 20.0),),
-              new TextField(
-              decoration: new InputDecoration(
+              const Padding(padding: EdgeInsets.only(top: 20.0),),
+              TextField(
+              decoration: InputDecoration(
                 hintText: "Perihal",
                 labelText: "Perihal",
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(20.0)
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0)
                 )
                 ),
               ),
 
-              new Padding(padding: EdgeInsets.only(top: 20.0),),
-              new TextField(
-              decoration: new InputDecoration(
+              const Padding(padding: EdgeInsets.only(top: 20.0),),
+              TextField(
+              decoration: InputDecoration(
                 hintText: "Sifat",
                 labelText: "Sifat",
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(10.0)
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0)
                 )
                 ),
               ),
 
-              new Padding(padding: EdgeInsets.only(top: 20.0),),
-              new TextField(
-              decoration: new InputDecoration(
+              const Padding(padding: EdgeInsets.only(top: 20.0),),
+              TextField(
+              decoration: InputDecoration(
                 hintText: "Tanggal Surat",
                 labelText: "Tanggal Surat",
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(20.0)
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0)
                 )
                 ),
               ),
 
-              new Padding(padding: EdgeInsets.only(top: 20.0),),
-              new TextField(
-              decoration: new InputDecoration(
+              const Padding(padding: EdgeInsets.only(top: 20.0),),
+              TextField(
+              decoration: InputDecoration(
                 hintText: "Tanggal Diterima",
                 labelText: "Tanggal Diterima",
-                border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(20.0)
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0)
                 )
                 ),
               ),
