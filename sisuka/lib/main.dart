@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
 import 'dashboard_screen.dart';
+import 'disposisi_masuk.dart';
+import 'disposisi_keluar.dart';
 
-void main() {
+void main() { 
   runApp(LoginApp());
 }
 
@@ -10,6 +12,7 @@ class LoginApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner:false,
       title: 'SISUKA',
       theme: ThemeData(
         primarySwatch: Colors.blue,

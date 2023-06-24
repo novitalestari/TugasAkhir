@@ -8,8 +8,7 @@ class DetailSuratMasukPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
      appBar: AppBar(
-        title: Text('Detail Surat'   , 
-        
+        title: const Text('Detail Surat Masuk', 
         style: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.bold,
@@ -20,58 +19,96 @@ class DetailSuratMasukPage extends StatelessWidget {
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(MdiIcons.chevronLeft ,)),
-        iconTheme: IconThemeData(color: Colors.black , ),
+          child: const Icon(MdiIcons.chevronLeft ,)),
+        iconTheme: const IconThemeData(color: Colors.black , ),
         centerTitle: true,
         backgroundColor: Colors.white,
         
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [Text("Subjek Surat Masuk"  , style: TextStyle(fontSize: 18  , fontWeight: FontWeight.bold),) , 
-                Container(
-                  width: 100,
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  decoration: BoxDecoration(
-                    color: Colors.amber,
-                  
-                  ),
-                  child: Center(child: Text("kotak masuk")),
+      
+      body: new Container(
+        padding: new EdgeInsets.all(10.0),
+        child: new Column(
+          children: <Widget> [
+            new TextField(
+              decoration: new InputDecoration(
+                hintText: "Surat",
+                labelText: "Asal",
+                border: new OutlineInputBorder(
+                  borderRadius: new BorderRadius.circular(10.0)
                 )
-                ],
+                ),
               ),
-             ListTile(
-              leading: CircleAvatar(),
-              trailing: Text("2 jam yang lalu"),
-              title: Text("Dari | Pengirim"   , style: TextStyle(
-                fontSize: 16 , fontWeight: FontWeight.bold  , 
-              ),),
-              subtitle: Text("Deskripsi surat masuk"   , style: TextStyle(
-                fontSize: 12 , fontWeight: FontWeight.w500  , 
-              ),),
-             ),
 
-             Container(
-            child: Column(
-              children: [
-                Text("Deskripsi Surat lore"),
+              new Padding(padding: EdgeInsets.only(top: 10.0),),
+              new TextField(
+              decoration: new InputDecoration(
+                hintText: "Dari",
+                labelText: "Dari",
+                border: new OutlineInputBorder(
+                  borderRadius: new BorderRadius.circular(10.0)
+                )
+                ),
+              ),
 
-                
-              ],
-            ),
-             )
-            ],
-          ),
-        )
-      ),
-    );
+              new Padding(padding: EdgeInsets.only(top: 10.0),),
+              new TextField(
+              decoration: new InputDecoration(
+                hintText: "No. Surat",
+                labelText: "No. Surat",
+                border: new OutlineInputBorder(
+                  borderRadius: new BorderRadius.circular(10.0)
+                )
+                ),
+              ),
+
+              new Padding(padding: EdgeInsets.only(top: 10.0),),
+              new TextField(
+              decoration: new InputDecoration(
+                hintText: "Perihal",
+                labelText: "Perihal",
+                border: new OutlineInputBorder(
+                  borderRadius: new BorderRadius.circular(10.0)
+                )
+                ),
+              ),
+
+              new Padding(padding: EdgeInsets.only(top: 10.0),),
+              new TextField(
+              decoration: new InputDecoration(
+                hintText: "Sifat",
+                labelText: "Sifat",
+                border: new OutlineInputBorder(
+                  borderRadius: new BorderRadius.circular(10.0)
+                )
+                ),
+              ),
+
+              new Padding(padding: EdgeInsets.only(top: 10.0),),
+              new TextField(
+              decoration: new InputDecoration(
+                hintText: "Tanggal Surat",
+                labelText: "Tanggal Surat",
+                border: new OutlineInputBorder(
+                  borderRadius: new BorderRadius.circular(10.0)
+                )
+                ),
+              ),
+
+              new Padding(padding: EdgeInsets.only(top: 10.0),),
+              new TextField(
+              decoration: new InputDecoration(
+                hintText: "Tanggal Diterima",
+                labelText: "Tanggal Diterima",
+                border: new OutlineInputBorder(
+                  borderRadius: new BorderRadius.circular(1)
+                )
+                ),
+              ),
+
+            ]
+           ),
+        ),
+      );
   }
 }
