@@ -1,6 +1,7 @@
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; 
 import 'package:http/http.dart' as http;
+import 'package:sisuka/api.dart';
 import 'dart:convert';
 import 'package:sisuka/detail_surat_masuk.dart';
 
@@ -12,109 +13,226 @@ class SuratMasukPage extends StatefulWidget {
 }
 
 class _SuratMasukPageState extends State<SuratMasukPage> {
-  // Tambahkan fungsi fetchData untuk mengambil data dari URL API
-  Future<void> fetchData() async {
-    final url = Uri.parse('http://192.168.43.4:8000/api/surat');
+  late List<dynamic> suratMasukList;
+  List<dynamic> filteredSuratMasukList = [];
+  int _selectedSuratIndex = -1; // Inisialisasi dengan nilai -1 sebagai tanda tidak ada surat yang dipilih
+
+  Future<List<dynamic>> fetchData() async {
+    final url = Uri.parse('${Api.baseUrl}/surat');
 
     final response = await http.get(url);
-
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      // Lakukan sesuatu dengan data yang diterima
-      return data;
+      List<dynamic> mailList = data['data'];
+      for (var mail in mailList) {
+        mail['isRead'] = false; // Tambahkan field 'isRead' untuk menandai surat belum dibaca
+        mail['status'] = 'Diterima'; // Tambahkan field 'status' untuk menyimpan status surat, default 'Diterima'
+      }
+      return mailList;
     } else {
       print('Gagal mengambil data. Status code: ${response.statusCode}');
+      return [];
     }
   }
 
   @override
   void initState() {
     super.initState();
-    fetchData(); // Panggil fungsi fetchData saat halaman dimuat
+    fetchData().then((data) {
+      setState(() {
+        suratMasukList = data;
+        filteredSuratMasukList = suratMasukList;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Surat Masuk',
           style: TextStyle(
-              fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
         leading: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(
-              MdiIcons.chevronLeft,
-            )),
-        iconTheme: IconThemeData(
-          color: Colors.black,
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(MdiIcons.chevronLeft),
         ),
+        iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blueGrey[900],
       ),
       body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Daftar Surat Masuk",
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Daftar Surat Masuk",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            Expanded(
-              child: FutureBuilder(
-                  future: fetchData(),
-                  builder: (context, AsyncSnapshot snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Container();
-                    } else if (snapshot.hasData) {
-                      return ListView.builder(
-                        itemCount: snapshot.data['data'].length,
-                        itemBuilder: (context, index) {
-                          final item = snapshot.data['data'][index];
-                          return ListTile(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        DetailSuratMasukPage(),
-                                  ));
-                            },
-                            leading: CircleAvatar(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 255, 192, 3),
-                            ),
-                            title: Text(
-                              "${item['perihal']}",
-                              style: TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.bold),
-                            ),
-                            subtitle: Text(
-                              "${item['no_surat']}",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 12),
-                            ),
-                          );
-                          // return Container();
-                        },
-                      );
+
+              // Kolom Pencarian
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: TextField(
+                  onChanged: (keyword) {
+                    if (keyword.isEmpty) {
+                      setState(() {
+                        // Jika keyword kosong, tampilkan semua surat
+                        filteredSuratMasukList = suratMasukList;
+                      });
                     } else {
-                      return Container();
+                      // Jika keyword tidak kosong, lakukan pencarian
+                      final List<dynamic> tempList = [];
+                      for (var surat in suratMasukList) {
+                        if (surat['perihal']
+                                .toLowerCase()
+                                .contains(keyword.toLowerCase()) ||
+                            surat['no_surat']
+                                .toLowerCase()
+                                .contains(keyword.toLowerCase())) {
+                          tempList.add(surat);
+                        }
+                      }
+                      setState(() {
+                        filteredSuratMasukList = tempList;
+                      });
                     }
-                  }),
-            )
-          ],
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Cari Surat',
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(
+                        color: Colors.grey,
+                        width: 1.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              // Tampilkan daftar surat yang sudah disaring
+              Expanded(
+                child: ListView.separated(
+                  itemCount: filteredSuratMasukList.length,
+                  separatorBuilder: (context, index) => Divider(
+                    color: Colors.grey, // Anda dapat mengubah warna garis sesuai keinginan
+                    thickness: 1.0,     // Anda dapat mengubah ketebalan garis sesuai keinginan
+                  ),
+                  itemBuilder: (context, index) {
+                    final item = filteredSuratMasukList[index];
+                    return InkWell(
+                      onTap: () {
+                        setState(() {
+                          // Perbarui _selectedSuratIndex dengan indeks surat yang sedang dipilih
+                          _selectedSuratIndex = index;
+                          // Set 'isRead' flag to true when a mail is tapped
+                          filteredSuratMasukList[index]['isRead'] = true;
+
+                          // Ganti status menjadi 'Dibaca' saat surat dibuka
+                          if (filteredSuratMasukList[index]['status'] == 'Diterima') {
+                            filteredSuratMasukList[index]['status'] = 'Dibaca';
+                          }
+                        });
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailSuratMasukPage(
+                              idSurat: item['id'].toString(),
+                            ),
+                          ),
+                        );
+                      },
+                      child: ListTile(
+                        leading: const CircleAvatar(
+                          backgroundImage: AssetImage('assets/images/surat-masuk.png'),
+                          radius: 20,
+                          backgroundColor: Colors.white,
+                        ),
+                        title: Text(
+                          "${item['perihal']}",
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: item['isRead'] ? Colors.black : Colors.blue,
+                          ),
+                        ),
+                        subtitle: Text(
+                          "${item['no_surat']}",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12,
+                            color: item['isRead'] ? Colors.black : Colors.blue,
+                          ),
+                        ),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(width: 4), // Spasi antara ikon dan teks keterangan
+                            Text(
+                              _getStatusText(item['status']),
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: _getColorForStatus(item['status']),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
-      )),
+      ),
     );
+  }
+
+  Color _getColorForStatus(String status) {
+    switch (status) {
+      case 'Diterima':
+        return Colors.blue;
+      case 'Dibaca':
+        return Colors.green;
+      case 'Ditindaklanjuti':
+        return Colors.orange;
+      case 'Didisposisi':
+        return Colors.red; 
+      default:
+        return Colors.blue;
+    }
+  }
+
+  String _getStatusText(String status) {
+    switch (status) {
+      case 'Diterima':
+        return 'Diterima';
+      case 'Dibaca':
+        return 'Dibaca';
+      case 'Ditindaklanjuti':
+        return 'Ditindaklanjuti';
+      case 'Didisposisi':
+        return 'Didisposisi';
+      default:
+        return 'Diterima';
+    }
   }
 }

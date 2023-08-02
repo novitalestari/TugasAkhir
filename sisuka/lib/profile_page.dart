@@ -9,30 +9,30 @@ class ProfilePage extends StatelessWidget {
     return  Scaffold(
       appBar: AppBar(
       
-        title: Text('Profile'   , 
+        title: const Text('Profile'   , 
         style: TextStyle(
-          fontSize: 14,
+          fontSize: 20,
           fontWeight: FontWeight.bold,
-          color: Colors.black
+          color: Colors.white,
         ),
         ),
-               leading: InkWell(
+              leading: InkWell(
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(MdiIcons.chevronLeft ,)),
-        iconTheme: IconThemeData(color: Colors.black , ),
+          child: const Icon(MdiIcons.chevronLeft ,)),
+        iconTheme: const IconThemeData(color: Colors.white , ),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blueGrey[900],
         
       ),
       body: SafeArea(
         
         child: Padding(
-          padding: EdgeInsets.all(20.0),
-          child: Container(
+          padding: const EdgeInsets.all(20.0),
+          child: SizedBox(
             width: MediaQuery.of(context).size.width,
-            child: Column(
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 CircleAvatar(
@@ -41,18 +41,6 @@ class ProfilePage extends StatelessWidget {
                 SizedBox(height: 15,),
                 Text("Ahmad" , style: TextStyle(fontSize: 16 , fontWeight: FontWeight.bold),),
                 Text("1020120102" , style: TextStyle(fontSize: 14 , fontWeight: FontWeight.w500),),
-                ListTile(
-                  title: Text("Pengaturan Akun"),
-                  trailing: Icon(MdiIcons.chevronRight),
-                ),
-                ListTile(
-                  title: Text("Pengaturan Akun"),
-                  trailing: Icon(MdiIcons.chevronRight),
-                ),
-                ListTile(
-                  title: Text("Pengaturan Akun"),
-                  trailing: Icon(MdiIcons.chevronRight),
-                ),
                 ListTile(
                   title: Text("Pengaturan Akun"),
                   trailing: Icon(MdiIcons.chevronRight),

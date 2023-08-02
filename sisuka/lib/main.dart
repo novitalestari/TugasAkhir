@@ -5,7 +5,7 @@ import 'dashboard_screen.dart';
 import 'disposisi_masuk.dart';
 import 'disposisi_keluar.dart';
 
-void main() async {
+void main() async { 
   WidgetsFlutterBinding.ensureInitialized();
   await SpUtil.getInstance();
   runApp(LoginApp());
@@ -17,15 +17,15 @@ class LoginApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'SISUKA',
-        theme: ThemeData(
+        theme: ThemeData(  
           primarySwatch: Colors.blue,
         ),
         home: (SpUtil.getBool('isLoggedIn') != true)
             ? LoginScreen()
-            : DashboardScreen(),
+            : const DashboardScreen(),
         routes: {
           '/login': (context) => LoginScreen(),
-          '/dashboard': (context) => DashboardScreen(),
+          '/dashboard': (context) => const DashboardScreen(),
         });
   }
 }
